@@ -21,6 +21,26 @@ This project synchronizes events from the IEEE vTools API to a Google Calendar. 
 
 ## Setup
 
+### Docker quickstart
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd <repository-folder>
+   ```
+
+2. **Set up Configuration**:
+   * Copy `.env.example` to `.env` 
+   * Update `.env` file with your data
+
+3. **Build and run the Docker container**:
+   ```bash
+   docker build -t event-calendar-synchronizer .
+   docker run -it --env-file=.env --rm event-calendar-synchronizer
+   ```
+
+### Local Setup
+
 1. **Clone the repository**:
    ```bash
    git clone <repository-url>
