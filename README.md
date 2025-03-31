@@ -42,7 +42,7 @@ This project synchronizes events from the IEEE vTools API to a Google Calendar. 
    * See [Python quickstart](https://developers.google.com/calendar/api/quickstart/python) to set up the Google Calendar API credentials.
    * Move the client secret JSON file to the project folder and rename it to `credentials.json`.
 
-5**Run the script**: The first time you run the script, it will prompt you to authenticate with your Google account. This will generate a `token.json` file for future use.
+5. **Run the script**: The first time you run the script, it will prompt you to authenticate with your Google account. This will generate a `token.json` file for future use.
     ```bash
     python main.py
     ```
