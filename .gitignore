@@ -2,5 +2,6 @@
 .env
 credentials.json
 token.json
+credentials.json:Zone.Identifier
 __pycache__/
 .idea

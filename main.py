@@ -5,30 +5,21 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-vtf = EventFetcher(base_url=os.getenv('VTOOLS_API'))
+vtf = EventFetcher(base_url=os.getenv('VTOOLS_API'),event_limit=10)
 
 country_code = os.getenv('COUNTRY_CODE')
+ou_code = os.getenv('OU_CODE')
 
 # TODO: Create exception class for this error
-if country_code is None:
-    raise Exception()
-
-country_code = country_code.upper()
-country_id = None
-countries = vtf.fetch_countries()
-for country in countries:
-    id = country['id']
-    abbreviation = country['attributes']['abbreviation']
-    if abbreviation == country_code:
-        country_id = id
-        break
-
-# TODO: Create exception class for this error
-if country_id is None:
+if country_code is not None:
+    events = vtf.get_events_by_country(country_code)
+elif ou_code is not None:
+    events = vtf.get_events_by_ou(ou_code.upper())
+else:
     raise Exception()
 
 print("Fetching events from vTools")
-events = vtf.get_events_by_country(int(country_id))
+
 print(f"{len(events)} Events fetched")
 
 print("Bootstraping CalendarAPI")
