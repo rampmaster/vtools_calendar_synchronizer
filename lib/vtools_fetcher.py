@@ -9,7 +9,6 @@ EVENT_LIMIT = 2000
 
 def filter_event_by_country(event, country_id):
     country_data = event['relationships']['country'].get('data')
-    print(country_data)
     if not country_data:
         return False
     
