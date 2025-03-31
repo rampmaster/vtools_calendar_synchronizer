@@ -5,9 +5,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from .entity.event import Event
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class CalendarAPI:
     SCOPES = [

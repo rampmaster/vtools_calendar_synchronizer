@@ -1,8 +1,5 @@
 import requests,os
-from dotenv import load_dotenv
 from .entity.event import Event
-
-load_dotenv()
 
 BASE_URL = os.getenv('VTOOLS_API')
 EVENT_LIMIT = 2000
