@@ -12,7 +12,6 @@ class EventFetcher:
 
     def filter_event_by_country(self,event, country_id):
         country_data = event['relationships']['country'].get('data')
-        print(country_data)
         if not country_data:
             return False
 
@@ -27,3 +26,5 @@ class EventFetcher:
 
     def get_events_by_country(self,country_id):
         return list(map(lambda x: Event(**x['attributes']), filter(lambda x: self.filter_event_by_country(x, country_id), self.fetch_events())))
+
+
