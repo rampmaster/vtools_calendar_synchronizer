@@ -29,13 +29,20 @@ This project synchronizes events from the IEEE vTools API to a Google Calendar. 
 
 2. **Install dependencies**: Install the required Python packages using pip:
     ```bash
+    pip -m venv .venv
+    source ./.venv/bin/activate
     pip install -r requirements.txt
     ```
-3. **Set up Google Calendar API credentials**: 
+   
+3. **Set up Configuration**:
+   * Copy `.env.example` to `.env` 
+   * Update `.env` file with your data
+
+4. **Set up Google Calendar API credentials**: 
    * See [Python quickstart](https://developers.google.com/calendar/api/quickstart/python) to set up the Google Calendar API credentials.
    * Move the client secret JSON file to the project folder and rename it to `credentials.json`.
 
-4. **Run the script**: The first time you run the script, it will prompt you to authenticate with your Google account. This will generate a `token.json` file for future use.
+5**Run the script**: The first time you run the script, it will prompt you to authenticate with your Google account. This will generate a `token.json` file for future use.
     ```bash
     python main.py
     ```
