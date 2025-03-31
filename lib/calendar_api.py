@@ -1,12 +1,10 @@
 import os.path
-
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-
-from .vtools_fetcher import Event
+from .entity.event import Event
 
 class CalendarAPI:
     SCOPES = [
@@ -14,7 +12,7 @@ class CalendarAPI:
         "https://www.googleapis.com/auth/calendar.calendarlist",
     ]
 
-    CALENDAR_ID = "c_43af0395e171c4997b9f25b43fa77a8e172f0405ed2fd325ded2462439218024@group.calendar.google.com"
+    CALENDAR_ID = os.getenv("CALENDAR_ID")
 
     def __init__(self):
         self.creds = None
@@ -26,8 +24,11 @@ class CalendarAPI:
             if self.creds and self.creds.expired and self.creds.refresh_token:
                 self.creds.refresh(Request())
             else:
-                flow = InstalledAppFlow.from_client_secrets_file("credentials.json", self.SCOPES)
-                self.creds = flow.run_local_server(port=0)
+                if os.path.exists("credentials.json"):
+                    flow = InstalledAppFlow.from_client_secrets_file("credentials.json", self.SCOPES)
+                    self.creds = flow.run_local_server(port=0)
+                else:
+                    raise FileNotFoundError()
 
             with open("token.json", "w") as token:
                 token.write(self.creds.to_json())
