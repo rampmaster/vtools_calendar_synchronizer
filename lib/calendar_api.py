@@ -5,9 +5,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from .entity.event import Event
-from dotenv import load_dotenv
-
-load_dotenv()
 
 class CalendarAPI:
     SCOPES = [
@@ -15,10 +12,9 @@ class CalendarAPI:
         "https://www.googleapis.com/auth/calendar.calendarlist",
     ]
 
-    CALENDAR_ID = os.getenv("CALENDAR_ID")
-
-    def __init__(self):
+    def __init__(self, calendar_id):
         self.creds = None
+        self.calendar_id = calendar_id
 
         if os.path.exists("token.json"):
             self.creds = Credentials.from_authorized_user_file("token.json", self.SCOPES)

@@ -1,22 +1,29 @@
-import requests,os
-from dotenv import load_dotenv
+import requests
 from .entity.event import Event
 
-load_dotenv()
+class EventFetcher:
 
-BASE_URL = os.getenv('VTOOLS_API')
-EVENT_LIMIT = 2000
+    base_url = ''
+    event_limit = 2000
 
-def filter_event_by_country(event, country_id):
-    country_data = event['relationships']['country'].get('data')
-    print(country_data)
-    if not country_data:
-        return False
-    
-    return int(country_data['id']) == country_id
+    def __init__(self, base_url = "https://events.vtools.ieee.org/RST/events/api/public/v5/", event_limit = 1000):
+        self.base_url = base_url
+        self.event_limit = event_limit
 
-def fetch_events():
-    return requests.get(BASE_URL + f"events/list?limit={EVENT_LIMIT}").json()['data']
+    def filter_event_by_country(self,event, country_id):
+        country_data = event['relationships']['country'].get('data')
+        print(country_data)
+        if not country_data:
+            return False
 
-def get_events_by_country(country_id):
-    return list(map(lambda x: Event(**x['attributes']), filter(lambda x: filter_event_by_country(x, country_id), fetch_events())))
+        return int(country_data['id']) == country_id
+
+    def fetch_countries(self):
+        return requests.get(self.base_url + f"countries/list").json()['data']
+
+    def fetch_events(self):
+        print(self.base_url + f"events/list?span=now~&limit={self.event_limit}&sort=+start_time")
+        return requests.get(self.base_url + f"events/list?span=now~&limit={self.event_limit}&sort=+start_time").json()['data']
+
+    def get_events_by_country(self,country_id):
+        return list(map(lambda x: Event(**x['attributes']), filter(lambda x: self.filter_event_by_country(x, country_id), self.fetch_events())))
