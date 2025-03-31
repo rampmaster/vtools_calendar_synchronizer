@@ -12,7 +12,7 @@ def filter_event_by_country(event, country_id):
     if not country_data:
         return False
     
-    return int(country_data['id']) == country_id
+    return str(country_data['id']) == str(country_id)
 
 def fetch_events():
     return requests.get(BASE_URL + f"events/list?limit={EVENT_LIMIT}").json()['data']
